@@ -1,0 +1,11 @@
+#!/bin/bash
+
+PAC="oauth2-proxy"
+SERVICE="/etc/service/$PAC"
+
+CMD="$1"
+
+if [ "$CMD" == "purge" -o "$CMD" == "remove" ]; then
+	# kill the service
+	svc -k $SERVICE
+fi

@@ -30,7 +30,7 @@ GOOS=$OS GOARCH=$ARCH CGO_ENABLED=0 \
 
 echo "=============== Copying Package Files ==================="
 rm -rf $DEST
-mkdir $DEST && cp -a dist/$PACKAGE/* $DEST
+mkdir $DEST && cp -a build/$PACKAGE/* $DEST
 cp $BUILD/oauth2-proxy $DEST/usr/share/$PACKAGE/
 
 echo "=============== Creating DEB ====================="

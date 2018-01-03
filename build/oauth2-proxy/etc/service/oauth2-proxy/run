@@ -1,0 +1,3 @@
+#!/bin/bash -e
+
+exec setuidgid oauth2-proxy /usr/share/flipkart/oauth2-proxy/oauth2-proxy -config=/var/lib/flipkart/oauth2-proxy/oauth2-proxy.cfg
