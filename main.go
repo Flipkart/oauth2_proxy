@@ -67,6 +67,7 @@ func main() {
 	flagSet.Bool("cookie-httponly", true, "set HttpOnly cookie flag")
 
 	flagSet.Bool("request-logging", true, "Log requests to stdout")
+	flagSet.String("request-logging-format", defaultRequestLoggingFormat, "Template for log lines")
 
 	flagSet.String("authz-url", "", "Authz url to fetch roles")
 	flagSet.String("provider", "authn", "OAuth provider")
@@ -126,7 +127,7 @@ func main() {
 	}
 
 	s := &Server{
-		Handler: LoggingHandler(os.Stdout, oauthproxy, opts.RequestLogging),
+		Handler: LoggingHandler(os.Stdout, oauthproxy, opts.RequestLogging, opts.RequestLoggingFormat),
 		Opts:    opts,
 	}
 	s.ListenAndServe()
