@@ -14,8 +14,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/bitly/oauth2_proxy/cookie"
-	"github.com/bitly/oauth2_proxy/providers"
+	"github.com/Flipkart/oauth2_proxy/cookie"
+	"github.com/Flipkart/oauth2_proxy/providers"
 	"github.com/mbland/hmacauth"
 )
 
@@ -670,21 +670,23 @@ func (p *OAuthProxy) Authenticate(rw http.ResponseWriter, req *http.Request) int
 	// At this point, the user is authenticated. proxy normally
 	if p.PassBasicAuth {
 		req.SetBasicAuth(session.User, p.BasicAuthPassword)
-		req.Header["X-Forwarded-User"] = []string{session.User}
-		if session.Email != "" {
-			req.Header["X-Forwarded-Email"] = []string{session.Email}
-		}
 	}
 	if p.PassUserHeaders {
-		req.Header["X-Forwarded-User"] = []string{session.User}
+		req.Header["X-User-Id"] = []string{session.User}
 		if session.Email != "" {
-			req.Header["X-Forwarded-Email"] = []string{session.Email}
+			req.Header["X-User-Email"] = []string{session.Email}
+		}
+		if len(session.Roles) != 0 {
+			req.Header["X-User-Roles"] = []string{strings.Join(session.Roles, ",")}
 		}
 	}
 	if p.SetXAuthRequest {
 		rw.Header().Set("X-Auth-Request-User", session.User)
 		if session.Email != "" {
 			rw.Header().Set("X-Auth-Request-Email", session.Email)
+		}
+		if len(session.Roles) != 0 {
+			rw.Header().Set("X-Auth-Request-Roles",  strings.Join(session.Roles, ","))
 		}
 	}
 	if p.PassAccessToken && session.AccessToken != "" {

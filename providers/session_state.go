@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/bitly/oauth2_proxy/cookie"
+	"github.com/Flipkart/oauth2_proxy/cookie"
 )
 
 type SessionState struct {
@@ -15,6 +15,7 @@ type SessionState struct {
 	RefreshToken string
 	Email        string
 	User         string
+	Roles        []string
 }
 
 func (s *SessionState) IsExpired() bool {
@@ -46,7 +47,7 @@ func (s *SessionState) EncodeSessionState(c *cookie.Cipher) (string, error) {
 }
 
 func (s *SessionState) accountInfo() string {
-	return fmt.Sprintf("email:%s user:%s", s.Email, s.User)
+	return fmt.Sprintf("email:%s user:%s roles:%s", s.Email, s.User, strings.Join(s.Roles, ","))
 }
 
 func (s *SessionState) EncryptedString(c *cookie.Cipher) (string, error) {
@@ -71,17 +72,18 @@ func (s *SessionState) EncryptedString(c *cookie.Cipher) (string, error) {
 
 func decodeSessionStatePlain(v string) (s *SessionState, err error) {
 	chunks := strings.Split(v, " ")
-	if len(chunks) != 2 {
-		return nil, fmt.Errorf("could not decode session state: expected 2 chunks got %d", len(chunks))
+	if len(chunks) != 3 {
+		return nil, fmt.Errorf("could not decode session state: expected 3 chunks got %d", len(chunks))
 	}
 
 	email := strings.TrimPrefix(chunks[0], "email:")
 	user := strings.TrimPrefix(chunks[1], "user:")
+	roles := strings.Split(strings.TrimPrefix(chunks[2], "roles:"), ",")
 	if user == "" {
 		user = strings.Split(email, "@")[0]
 	}
 
-	return &SessionState{User: user, Email: email}, nil
+	return &SessionState{User: user, Email: email, Roles: roles}, nil
 }
 
 func DecodeSessionState(v string, c *cookie.Cipher) (s *SessionState, err error) {

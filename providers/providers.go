@@ -1,7 +1,7 @@
 package providers
 
 import (
-	"github.com/bitly/oauth2_proxy/cookie"
+	"github.com/Flipkart/oauth2_proxy/cookie"
 )
 
 type Provider interface {
@@ -31,7 +31,9 @@ func New(provider string, p *ProviderData) Provider {
 		return NewGitLabProvider(p)
 	case "oidc":
 		return NewOIDCProvider(p)
-	default:
+	case "google":
 		return NewGoogleProvider(p)
+	default:
+		return NewAuthnProvider(p)
 	}
 }
