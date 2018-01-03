@@ -31,10 +31,10 @@ if [ "$CMD" == "configure" ]; then
     fi
 
   makedir "/var/log/flipkart/$PAC"
-  makedir "/usr/share/$PAC"
+  makedir "/usr/share/flipkart/$PAC"
 
   ## etc, bin, package dir
-	chown -Rf  $USER:$GROUP /usr/share/$PAC /etc/init.d/$PAC /var/log/flipkart/$PAC
+	chown -Rf  $USER:$GROUP /usr/share/flipkart/$PAC /etc/init.d/$PAC /var/log/flipkart/$PAC
 fi
 
 logmsg $(echo -e "\033[32m================================\033[0m")

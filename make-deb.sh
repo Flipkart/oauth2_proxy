@@ -31,8 +31,8 @@ GOOS=$OS GOARCH=$ARCH CGO_ENABLED=0 \
 echo "=============== Copying Package Files ==================="
 rm -rf $DEST
 mkdir $DEST && cp -a build/$PACKAGE/* $DEST
-mkdir -p $DEST/usr/share/$PACKAGE/
-cp $BUILD/oauth2-proxy $DEST/usr/share/$PACKAGE/
+mkdir -p $DEST/usr/share/flipkart/$PACKAGE/
+cp $BUILD/oauth2-proxy $DEST/usr/share/flipkart/$PACKAGE/
 
 echo "=============== Creating DEB ====================="
 sed -i -e "s/_PACKAGE_/$PACKAGE/g" $DEST/DEBIAN/control
