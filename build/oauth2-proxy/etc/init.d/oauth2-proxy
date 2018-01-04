@@ -1,0 +1,24 @@
+#!/bin/bash -e
+
+PACKAGE=oauth2-proxy
+SERVICE=/etc/service/$PACKAGE
+
+case $1 in
+  start)
+    echo "Starting service ..."
+    svc -u $SERVICE
+    ;;
+  stop)
+    echo "Stopping service ..."
+    svc -d $SERVICE
+    ;;
+  status)
+    svstat $SERVICE
+    ;;
+  shell)
+    exec setuidgid $PACKAGE bash
+    ;;
+  *)
+    echo "Usage $0 {start|stop|restart|status|shell}"
+    ;;
+esac

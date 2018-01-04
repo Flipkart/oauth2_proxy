@@ -2,7 +2,7 @@
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PACKAGE=oauth2-proxy
-VERSION=$(cat $DIR/version.go | grep "const VERSION" | awk '{print $NF}' | sed 's/"//g')
+VERSION=2.2.$(git log -n1 --format="%ct")
 DEST="deb-$PACKAGE-$VERSION"
 DEB="$PACKAGE-$VERSION.deb"
 OS=${1:-$(go env GOOS)}

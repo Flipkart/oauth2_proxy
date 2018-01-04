@@ -1,3 +1,5 @@
+#!/bin/bash -e
+
 USER=oauth2-proxy
 GROUP=oauth2-proxy
 
