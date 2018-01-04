@@ -2,6 +2,9 @@
 
 USER=oauth2-proxy
 GROUP=oauth2-proxy
+PAC=oauth2-proxy
+
+CMD="$1"
 
 logmsg () {
   echo "[`date`] $*"
@@ -36,7 +39,7 @@ if [ "$CMD" == "configure" ]; then
   makedir "/usr/share/flipkart/$PAC"
 
   ## etc, bin, package dir
-	chown -Rf  $USER:$GROUP /usr/share/flipkart/$PAC /etc/init.d/$PAC /var/log/flipkart/$PAC
+	chown -Rf  $USER:$GROUP /usr/share/flipkart/$PAC /etc/init.d/$PAC /var/log/flipkart/$PAC /var/lib/flipkart/$PAC
 fi
 
 logmsg $(echo -e "\033[32m================================\033[0m")

@@ -1,6 +1,7 @@
 #!/bin/bash -ex
 
 PAC="oauth2-proxy"
+SERVICE="/etc/service/$PAC"
 
 CMD="$1"
 
@@ -27,4 +28,5 @@ if [ "$CMD" == "purge" -o "$CMD" == "remove" ] ; then
 
     rm -rf /etc/service/$PAC
 fi
+
 exit 0
