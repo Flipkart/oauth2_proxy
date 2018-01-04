@@ -7,5 +7,6 @@ CMD="$1"
 
 if [ "$CMD" == "purge" -o "$CMD" == "remove" ]; then
 	# kill the service
-	svc -k $SERVICE
+	svc -kx $SERVICE
+	svc -kx $SERVICE/log
 fi
