@@ -36,7 +36,6 @@ if [ "$CMD" == "configure" ]; then
     fi
 
   makedir "/var/log/flipkart/$PAC"
-  makedir "/usr/share/flipkart/$PAC"
 
   ## etc, bin, package dir
 	chown -Rf  $USER:$GROUP /usr/share/flipkart/$PAC /etc/init.d/$PAC /var/log/flipkart/$PAC /var/lib/flipkart/$PAC

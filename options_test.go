@@ -151,7 +151,8 @@ func TestDefaultProviderApiSettings(t *testing.T) {
 		p.LoginURL.String())
 	assert.Equal(t, "http://localhost:45101/oauth/token",
 		p.RedeemURL.String())
-	assert.Equal(t, "", p.ProfileURL.String())
+	assert.Equal(t, "", p.ValidateURL.String())
+	assert.Equal(t, "http://localhost:45101/oauth/r/api/v1/user/details", p.ProfileURL.String())
 	assert.Equal(t, "user.profile", p.Scope)
 }
 

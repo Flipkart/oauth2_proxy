@@ -6,26 +6,9 @@ SERVICE="/etc/service/$PAC"
 CMD="$1"
 
 if [ "$CMD" == "purge" -o "$CMD" == "remove" ] ; then
-    if [ -d "/var/log/flipkart/$PAC" ]; then
- 	    rm -rf "/var/log/flipkart/$PAC"
-    fi
-
-    if [ -d "/usr/share/$PAC" ]; then
-        rm -rf "/usr/share/$PAC"
-    fi
-
-    if [ -d "/var/run/flipkart/$PAC" ]; then
-        rm -rf "/var/run/flipkart/$PAC"
-    fi
-
-    if [ -d "/etc/$PAC" ]; then
-        rm -rf "/etc/$PAC"
-    fi
-
-    if [ -f "/etc/cron.d/$PAC" ]; then
-        rm "/etc/cron.d/$PAC"
-    fi
-
+    rm -rf "/var/log/flipkart/$PAC"
+    rm -rf "/usr/share/flipkart/$PAC"
+    rm -rf "/var/lib/flipkart/$PAC"
     rm -rf /etc/service/$PAC
 fi
 

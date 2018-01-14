@@ -42,11 +42,11 @@ func NewAuthnProvider(p *ProviderData) *AuthnProvider {
 	return &AuthnProvider{ProviderData: p}
 }
 
-func (p *AuthnProvider) getDetails(s *SessionState) {
+func (p *AuthnProvider) getDetails(s *SessionState) error {
 	req, err := http.NewRequest("GET", p.ProfileURL.String(), nil)
 	if err != nil {
 		log.Printf("failed building request %s", err)
-		return
+		return err
 	}
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", s.AccessToken))
 
@@ -54,35 +54,42 @@ func (p *AuthnProvider) getDetails(s *SessionState) {
 
 	if err != nil {
 		log.Printf("failed making request %s", err)
-		return
+		return err
 	}
 	s.Email, err = json.Get("email").String()
 	if err != nil {
 		log.Printf("email not found")
-		return
+		return err
 	}
 	s.User, err = json.Get("sub").String()
 	if err != nil {
 		log.Printf("sub not found")
-		return
+		return err
 	}
 	err = p.getRolesAndPerms(s)
 	if err != nil {
 		log.Printf("could not obtain roles %s", err)
-		return
+		return err
 	}
+	return nil
 }
 
 func (p *AuthnProvider) GetEmailAddress(s *SessionState) (string, error) {
 	if s.Email == "" {
-		p.getDetails(s)
+		err := p.getDetails(s)
+		if err != nil {
+			return "", err
+		}
 	}
 	return s.Email, nil
 }
 
 func (p *AuthnProvider) GetUserName(s *SessionState) (string, error) {
 	if s.User == "" {
-		p.getDetails(s)
+		err := p.getDetails(s)
+		if err != nil {
+			return "", err
+		}
 	}
 	return s.User, nil
 }

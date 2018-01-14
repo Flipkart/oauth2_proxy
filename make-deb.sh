@@ -7,9 +7,6 @@ DEST="deb-$PACKAGE-$VERSION"
 DEB="$PACKAGE-$VERSION.deb"
 OS=${1:-$(go env GOOS)}
 ARCH=${2:-$(go env GOARCH)}
-host=${host:-"repo-svc-app-0001.nm.flipkart.com"}
-port=${port:-"8080"}
-repo=${repo:-"oauth2-proxy"}
 
 echo "=============== Build Config ================="
 echo "PACKAGE: $PACKAGE"
