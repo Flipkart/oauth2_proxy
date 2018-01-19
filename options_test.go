@@ -58,6 +58,7 @@ func TestGoogleGroupInvalidFile(t *testing.T) {
 	o.GoogleGroups = []string{"test_group"}
 	o.GoogleAdminEmail = "admin@example.com"
 	o.GoogleServiceAccountJSON = "file_doesnt_exist.json"
+	o.Provider = "google"
 	err := o.Validate()
 	assert.NotEqual(t, nil, err)
 
@@ -146,12 +147,13 @@ func TestDefaultProviderApiSettings(t *testing.T) {
 	o := testOptions()
 	assert.Equal(t, nil, o.Validate())
 	p := o.provider.Data()
-	assert.Equal(t, "https://accounts.google.com/o/oauth2/auth?access_type=offline",
+	assert.Equal(t, "http://localhost:45101/oauth/authorize",
 		p.LoginURL.String())
-	assert.Equal(t, "https://www.googleapis.com/oauth2/v3/token",
+	assert.Equal(t, "http://localhost:45101/oauth/token",
 		p.RedeemURL.String())
-	assert.Equal(t, "", p.ProfileURL.String())
-	assert.Equal(t, "profile email", p.Scope)
+	assert.Equal(t, "", p.ValidateURL.String())
+	assert.Equal(t, "http://localhost:45101/oauth/r/api/v1/user/details", p.ProfileURL.String())
+	assert.Equal(t, "user.profile", p.Scope)
 }
 
 func TestPassAccessTokenRequiresSpecificCookieSecretLengths(t *testing.T) {

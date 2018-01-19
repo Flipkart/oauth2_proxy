@@ -61,7 +61,7 @@ func main() {
 	flagSet.String("cookie-name", "_oauth2_proxy", "the name of the cookie that the oauth_proxy creates")
 	flagSet.String("cookie-secret", "", "the seed string for secure cookies (optionally base64 encoded)")
 	flagSet.String("cookie-domain", "", "an optional cookie domain to force cookies to (ie: .yourcompany.com)*")
-	flagSet.Duration("cookie-expire", time.Duration(168)*time.Hour, "expire timeframe for cookie")
+	flagSet.Duration("cookie-expire", time.Duration(24)*time.Hour, "expire timeframe for cookie")
 	flagSet.Duration("cookie-refresh", time.Duration(0), "refresh the cookie after this duration; 0 to disable")
 	flagSet.Bool("cookie-secure", true, "set secure (HTTPS) cookie flag")
 	flagSet.Bool("cookie-httponly", true, "set HttpOnly cookie flag")
@@ -69,7 +69,8 @@ func main() {
 	flagSet.Bool("request-logging", true, "Log requests to stdout")
 	flagSet.String("request-logging-format", defaultRequestLoggingFormat, "Template for log lines")
 
-	flagSet.String("provider", "google", "OAuth provider")
+	flagSet.String("authz-url", "", "Authz url to fetch roles")
+	flagSet.String("provider", "authn", "OAuth provider")
 	flagSet.String("oidc-issuer-url", "", "OpenID Connect issuer URL (ie: https://accounts.google.com)")
 	flagSet.String("login-url", "", "Authentication endpoint")
 	flagSet.String("redeem-url", "", "Token redemption endpoint")

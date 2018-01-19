@@ -1,0 +1,7 @@
+Package: _PACKAGE_
+Version: _VERSION_
+Section: flipkart/infra
+Priority: standard
+Architecture: _ARCH_
+Maintainer: Auth Dev <authn-dev@flipkart.com>
+Description: oauth2 reverse proxy

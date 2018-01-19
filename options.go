@@ -13,7 +13,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/bitly/oauth2_proxy/providers"
+	"github.com/Flipkart/oauth2_proxy/providers"
 	oidc "github.com/coreos/go-oidc"
 	"github.com/mbland/hmacauth"
 )
@@ -41,6 +41,7 @@ type Options struct {
 	DisplayHtpasswdForm      bool     `flag:"display-htpasswd-form" cfg:"display_htpasswd_form"`
 	CustomTemplatesDir       string   `flag:"custom-templates-dir" cfg:"custom_templates_dir"`
 	Footer                   string   `flag:"footer" cfg:"footer"`
+	AuthzUrl                 string   `flag:"authz-url" cfg:"authz_url"`
 
 	CookieName     string        `flag:"cookie-name" cfg:"cookie_name" env:"OAUTH2_PROXY_COOKIE_NAME"`
 	CookieSecret   string        `flag:"cookie-secret" cfg:"cookie_secret" env:"OAUTH2_PROXY_COOKIE_SECRET"`
@@ -278,7 +279,12 @@ func parseProviderInfo(o *Options, msgs []string) []string {
 		} else {
 			p.Verifier = o.oidcVerifier
 		}
+	case *providers.AuthnProvider:
+		if o.AuthzUrl != "" {
+			p.AuthzUrl, msgs = parseURL(o.AuthzUrl, "authz", msgs)
+		}
 	}
+
 	return msgs
 }
 

@@ -1,0 +1,3 @@
+#!/bin/bash -e
+
+exec setuidgid oauth2-proxy multilog t s1048576 n10 /var/log/flipkart/oauth2-proxy

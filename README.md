@@ -15,7 +15,7 @@ to validate accounts by email, domain or group.
 
 ## Installation
 
-1. Download [Prebuilt Binary](https://github.com/bitly/oauth2_proxy/releases) (current release is `v2.2`) or build with `$ go get github.com/bitly/oauth2_proxy` which will put the binary in `$GOROOT/bin`
+1. Download [Prebuilt Binary](https://github.com/Flipkart/oauth2_proxy/releases) (current release is `v2.2`) or build with `$ go get github.com/Flipkart/oauth2_proxy` which will put the binary in `$GOROOT/bin`
 Prebuilt binaries can be validated by extracting the file and verifying it against the `sha256sum.txt` checksum file provided for each release starting with version `v2.3`.
 ```
 sha256sum -c sha256sum.txt 2>&1 | grep OK
@@ -31,7 +31,8 @@ You will need to register an OAuth application with a Provider (Google, GitHub o
 
 Valid providers are :
 
-* [Google](#google-auth-provider) *default*
+* [Authn](#authn-auth-provider) *default*
+* [Google](#google-auth-provider)
 * [Azure](#azure-auth-provider)
 * [Facebook](#facebook-auth-provider)
 * [GitHub](#github-auth-provider)
@@ -39,6 +40,20 @@ Valid providers are :
 * [LinkedIn](#linkedin-auth-provider)
 
 The provider can be selected using the `provider` configuration value.
+
+### Authn Auth Provider
+Register a client with redirect url as `https://internal.yourcomapny.com/oauth2/callback` and activate it
+
+In the config add following:
+
+    login_url = https://<authn url>/oauth/authorize
+    redeem_url = https://<authn url>/oauth/token
+    profile_url = https://<authn url>/oauth/r/api/v1/user/details
+
+and if you want get roles of user
+
+    authz_url = http://<authz url>
+
 
 ### Google Auth Provider
 
